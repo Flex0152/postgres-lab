@@ -31,17 +31,17 @@ Postgres <---> pgAdmin
 ---
 
 ## Repository Structure
-postgres-lab/
-├── compose.yaml
-├── top-secret.txt
-├── pgcli/
-│ └── Dockerfile
-├── scripts/
-│ ├── pgcli-build-image.sh
-│ ├── pgcli-sun.sh
-│ ├── lab-up.sh
-│ └── lab-down.sh
-└── README.md
+postgres-lab/  
+├── compose.yaml  
+├── top-secret.txt  
+├── pgcli/  
+│ └── Dockerfile  
+├── scripts/  
+│ ├── pgcli-build-image.sh  
+│ ├── pgcli-sun.sh  
+│ ├── lab-up.sh  
+│ └── lab-down.sh  
+└── README.md  
 
 ---
 
