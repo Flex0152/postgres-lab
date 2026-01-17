@@ -1,18 +1,18 @@
 # Postgres Container Lab
-Das Projekt stellt eine komplette, reproduzierbare mit 
-podman compose erstellte Postgres SQL Umgebung bereit.
+This project provides a fully reproducible PostgresSQL 
+environment using podman compose.
 
-Das beinhaltet: 
-- ein PostgresSQL Datenbankserver
-- pgAdmin Weboberfläche
+It includes:
+- PostgresSQL database server
+- pgAdmin web UI
 - pgcli command line client
 
-Das Ziel ist, ein portables Datenbank lab für Entwicklung, Testing und
-Lernen zu erstellen. 
+The goal is to provide a portable database lab for development, 
+testing and learning. 
 
 ## Architecture 
-Postgres <---> pgAdmin
-|
+Postgres <---> pgAdmin  
+|  
 +--> pgcli (custom image)
 
 ## Usage
