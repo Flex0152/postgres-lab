@@ -1,7 +1,6 @@
 podman run \
     -it \
     --name "pg_cli" \
-    --network "postgres_db-network" \
+    --network "postgres-lab_db-network" \
     --rm \
-    postgres_client:latest \
-    /bin/sh
+    pgcli:latest

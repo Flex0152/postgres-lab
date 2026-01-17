@@ -6,7 +6,6 @@ services:
       - mypassword
     environment:
       POSTGRES_PASSWORD_FILE: /run/secrets/mypassword
-      POSTGRES_DB: KostenDB
     volumes:
       - ./pgdata:/var/lib/postgresql/data:U
     networks:
@@ -19,29 +18,23 @@ services:
   pgadmin:
     image: docker.io/dpage/pgadmin4:9.11
     container_name: pgadmin
-    # behält UserID vom Host
     userns: keep-id
     secrets:
       - mypassword
     ports:
-      # der env definierte Port nach außen
       - 5050:8080
     volumes:
-      # :U Container User gemappt auf Host User
       - ./pgadmindata:/var/lib/pgadmin:U
     environment:
-      PGADMIN_DEFAULT_EMAIL: felix@local.int
+      PGADMIN_DEFAULT_EMAIL: admin@local.int
       PGADMIN_DEFAULT_PASSWORD_FILE: /run/secrets/mypassword
       PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
-      # Berechtigungsprobleme für untere Ports < 1024 umgehen
       PGADMIN_LISTEN_PORT: 8080
     networks:
       - db-network
-    # abhängig vom zustand des postgres server
     depends_on:
       db:
         condition: service_healthy
-# Netzwerkdefinition für alle Services
 networks:
   db-network:
     driver: bridge

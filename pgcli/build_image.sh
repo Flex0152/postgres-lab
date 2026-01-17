@@ -1,3 +1,3 @@
 podman build \
-    -t postgres_client \
+    -t pgcli \
     .
