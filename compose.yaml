@@ -8,6 +8,7 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/mypassword
     volumes:
       - ./pgdata:/var/lib/postgresql/data:U
+      - ./initdb:/docker-entrypoint-initdb.d:ro
     networks:
       - db-network
     healthcheck:
