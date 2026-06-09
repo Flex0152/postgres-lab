@@ -1,3 +1,4 @@
 /pgdata
 /pgadmindata
 *.txt
+*.sql
