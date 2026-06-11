@@ -6,6 +6,7 @@ services:
       - mypassword
     environment:
       POSTGRES_PASSWORD_FILE: /run/secrets/mypassword
+      POSTGRES_DB: Flowster
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./initdb:/docker-entrypoint-initdb.d:ro
