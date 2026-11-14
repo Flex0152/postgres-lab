@@ -1,45 +1,50 @@
 services:
   db:
-    image: docker.io/library/postgres:17-alpine
+    image: docker.io/library/postgres:18.7
     container_name: postgres_sql_srv
+    restart: unless-stopped
+    shm_size: 256mb
     secrets:
-      - mypassword
+      - postgres_password
     environment:
-      POSTGRES_PASSWORD_FILE: /run/secrets/mypassword
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
     volumes:
-      - ./pgdata:/var/lib/postgresql/data:U
-      - ./initdb:/docker-entrypoint-initdb.d:ro
+      - /srv/data/databases/postgres/data:/var/lib/postgresql
     networks:
-      - db-network
+      - postgres-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U postgres -d postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
+      start_period: 30s
   pgadmin:
-    image: docker.io/dpage/pgadmin4:9.11
+    image: docker.io/dpage/pgadmin4:9.18
     container_name: pgadmin
-    userns: keep-id
+    restart: unless-stopped
     secrets:
-      - mypassword
+      - pgadmin_password
     ports:
-      - 5050:8080
+      - "127.0.0.1:5050:8080"
     volumes:
-      - ./pgadmindata:/var/lib/pgadmin:U
+      - /srv/data/applications/pgadmin/pgadmindata:/var/lib/pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@local.int
-      PGADMIN_DEFAULT_PASSWORD_FILE: /run/secrets/mypassword
-      PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "False"
+      PGADMIN_DEFAULT_EMAIL: admin@home.arpa
+      PGADMIN_DEFAULT_PASSWORD_FILE: /run/secrets/pgadmin_password
       PGADMIN_LISTEN_PORT: 8080
+      PGADMIN_CONFIG_ALLOW_SPECIAL_EMAIL_DOMAINS: "['arpa']"
     networks:
-      - db-network
+      - postgres-network
     depends_on:
       db:
         condition: service_healthy
 networks:
-  db-network:
+  postgres-network:
     driver: bridge
 secrets:
-  mypassword:
-    file: ./top-secret.txt
+  postgres_password:
+    file: ./secrets/postgres_password
+
+  pgadmin_password:
+    file: ./secrets/pgadmin_password
 
