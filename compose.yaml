@@ -9,7 +9,11 @@ services:
     environment:
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
     volumes:
-      - /srv/data/databases/postgres/data:/var/lib/postgresql
+      - type: bind
+        source: /srv/data/databases/postgres/data
+        target: /var/lib/postgresql
+        bind:
+          create_host_path: false
     networks:
       - postgres-network
     healthcheck:
@@ -27,7 +31,11 @@ services:
     ports:
       - "127.0.0.1:5050:8080"
     volumes:
-      - /srv/data/applications/pgadmin/pgadmindata:/var/lib/pgadmin
+      - type: bind
+        source: /srv/data/applications/pgadmin/pgadmindata
+        target: /var/lib/pgadmin
+        bind:
+          create_host_path: false
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@home.arpa
       PGADMIN_DEFAULT_PASSWORD_FILE: /run/secrets/pgadmin_password
