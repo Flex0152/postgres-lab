@@ -2,3 +2,4 @@
 /pgadmindata
 *.txt
 *.sql
+*_password
